@@ -54,8 +54,12 @@ Within Medusa, you can hook classes, methods, or native functions with Frida. Th
 <br/>
 
 The app is run, and I enter gibberish into the prompt within the app to trigger the comparison. The method spits out what seems to just be just decimal, but CyberChef was able to automatically detect that it was a string. I clicked the magic wand icon and it put the recipie together for me:
+center><img src="/assets/images/crack-me-1/17.png" /></center>  
+<center><i><small>Figure 7 - Results of the hook.</small></i></center>  
+<br/>
+
 <center><img src="/assets/images/crack-me-1/7.png" /></center>  
-<center><i><small>Figure 7 - Secret obtained again!</small></i></center>  
+<center><i><small>Figure 8 - Secret obtained again!</small></i></center>  
 <br/>
 
 ### Summary
@@ -72,29 +76,29 @@ The second uncrackable has the same objective as before, but the difficulty is h
 
 The app's main method is doing root detection again, not surprising. However, what's interesting is that in this version, it's loading a native library:
 <center><img src="/assets/images/crack-me-1/8.png" /></center>  
-<center><i><small>Figure 8 - Loading a library.</small></i></center>  
+<center><i><small>Figure 9 - Loading a library.</small></i></center>  
 <br/>
 
 There is a class named "CodeCheck" that doesn't seem to be doing anything other than returning something called "bar":
 <center><img src="/assets/images/crack-me-1/9.png" /></center>  
-<center><i><small>Figure 9 - Suspicious method.</small></i></center>  
+<center><i><small>Figure 10 - Suspicious method.</small></i></center>  
 <br/>
 
 I am going to assume that this is a native method coming from that library seen in code earlier.
 
 Going back to the APK, I use Ubuntu's built-in archive manager to open the APK like a zip file to see the contents:
 <center><img src="/assets/images/crack-me-1/10.png" /></center>  
-<center><i><small>Figure 10 - Extracted APK contents.</small></i></center>  
+<center><i><small>Figure 11 - Extracted APK contents.</small></i></center>  
 <br/>
 
 In the `lib` folder, there are four folders with different CPU architecture names, and each contains a copy of `libfoo.so`:
 <center><img src="/assets/images/crack-me-1/11.png" /></center>  
-<center><i><small>Figure 11 - The ELF library.</small></i></center>  
+<center><i><small>Figure 12 - The ELF library.</small></i></center>  
 <br/>
 
 I open the library in Ghidra, and find a function that has `bar` in the name, just like the CodeCheck class referenced:
 <center><img src="/assets/images/crack-me-1/12.png" /></center>  
-<center><i><small>Figure 12 - "bar" method performs a string comparison.</small></i></center>  
+<center><i><small>Figure 13 - "bar" method performs a string comparison.</small></i></center>  
 <br/>
 
 The code highlighed in the purple block is performing a check to see if `iVar1` is `0x17` bytes long, or `23` in decimal. If so, it calls `strncmp` to do a string comparison. It's safe to assume that the first two arguments are the user input, and the secret, with the third arg just being `0x17` again, the string length.
@@ -103,17 +107,17 @@ The code highlighed in the purple block is performing a check to see if `iVar1` 
 
 Now that we know what we need to hook, we can go back to Medusa. Included in the `snippets` folder in Medusa, there is a Frida script called `strncmp.js` that is able to hook calls to `strncmp` and dump the arguments to it:
 <center><img src="/assets/images/crack-me-1/13.png" /></center>  
-<center><i><small>Figure 13 - Frida script to hook strncmp.</small></i></center>  
+<center><i><small>Figure 14 - Frida script to hook strncmp.</small></i></center>  
 <br/>
 
 I attempted to import it within Medusa using the correct commands, but for some reason it did not produce results. Instead, I ran the script directly from Frida itself, and got results:
 <center><img src="/assets/images/crack-me-1/14.png" /></center>  
-<center><i><small>Figure 14 - The secret is revealed!</small></i></center>  
+<center><i><small>Figure 15 - The secret is revealed!</small></i></center>  
 <br/>
 
 Verifying the solution:
 <center><img src="/assets/images/crack-me-1/15.png" /></center>  
-<center><i><small>Figure 15 - Challenge solved!</small></i></center>  
+<center><i><small>Figure 16 - Challenge solved!</small></i></center>  
 <br/>
 
 ### Summary
@@ -122,7 +126,7 @@ The difficulty of this challenge was significantly higher for me because it was 
 #### Appendex
 If anyone's wondering what's up with my terminal screenshots, no, I am not taking pictures of my screen with my phone. I recently found out about a custom terminal emulator called [Cool Retro Term](https://github.com/Swordfish90/cool-retro-term) that mimics the look of old-school CRT monitors:
 <center><img src="/assets/images/crack-me-1/16.png" /></center>  
-<center><i><small>Figure 16 - Cool Retro Term's "Futuristic" theme.</small></i></center>  
+<center><i><small>Figure 17 - Cool Retro Term's "Futuristic" theme.</small></i></center>  
 <br/>
 
 You can install it with `sudo apt install cool-retro-term`, and there are several themes to explore and tweak.
