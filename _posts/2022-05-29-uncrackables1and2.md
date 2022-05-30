@@ -54,7 +54,7 @@ Within Medusa, you can hook classes, methods, or native functions with Frida. Th
 <br/>
 
 The app is run, and I enter gibberish into the prompt within the app to trigger the comparison. The method spits out what seems to just be just decimal, but CyberChef was able to automatically detect that it was a string. I clicked the magic wand icon and it put the recipie together for me:
-center><img src="/assets/images/crack-me-1/17.png" /></center>  
+<center><img src="/assets/images/crack-me-1/17.png" /></center>  
 <center><i><small>Figure 7 - Results of the hook.</small></i></center>  
 <br/>
 
