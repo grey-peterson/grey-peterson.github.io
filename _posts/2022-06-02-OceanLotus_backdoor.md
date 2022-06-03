@@ -26,7 +26,7 @@ Using my enterprise VirusTotal account, I was able to look up one of the digests
 <center><i><small>Figure 2 - Grab a sample from VT.</small></i></center>  
 <br/> 
 
-After downloading the sample, I opened it up in Jadx-gui, and checked the manifest, which is always the first step in analyzing Android malware:
+After downloading the sample, I opened it up in Jadx-gui and checked the manifest, which is always the first step in analyzing Android malware:
 <center><img src="/assets/images/backdoor/backdoor (2).png" /></center>  
 <center><i><small>Figure 3 - Manifest with suspicious signals.</small></i></center>  
 <br/> 
@@ -128,4 +128,4 @@ This fact made the app significantly more interesting to work on, it felt kind o
 
 Also, to clarify one point, even though Play Protect can block this app from being installed, there is no indication that this is, or ever was, on the Play Store, and seems to have been distributed via off-market means of some kind, so the likelyhood of this app having wide-spread installs may not be very likely, and any devices that did have it installed have automatically removed them by now, assuming the affected devices have been able to check into the Play Store recently.
 
-WIth that, we come to the end of another example of real-world Android malware reverse engineering. I will keep my eye out for more interesting samples to showcase in the future!
+With that, we come to the end of another example of real-world Android malware reverse engineering. I will keep my eye out for more interesting samples to showcase in the future!
